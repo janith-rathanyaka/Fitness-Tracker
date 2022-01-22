@@ -13,14 +13,30 @@ shinyUI(
       f7Tab(
         tabName = "exercises",
         active = TRUE,
-        actionButton(
-          inputId = "add_excer",
-          label = "Create New"
-        ),
         tags$div(
           id = "list_excer"
         )
       ),
+      f7Tab(
+        tabName = "New exercise",
+        active = TRUE,
+       f7Text(
+         inputId = "new_excer_name",
+         label = "Name of exercise"
+       ),
+       f7TextArea(
+         inputId = "new_excer_notes",
+         label = "Notes"
+       ),
+      f7Text(
+       inputId = "new_excer_url",
+       label = "URL of Image"
+      ),
+      f7Button(
+        inputId = "new_excer_save",
+        label = "Save"
+      )
+      ),  
       .items = NULL,
       id = NULL,
       swipeable = FALSE,
