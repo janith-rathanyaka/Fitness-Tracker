@@ -1,6 +1,6 @@
 function(input,output,session) {
   user <- reactiveValues(
- #   auth = FALSE,
+    auth = FALSE,
     excers = list(
       bench = list(
         name = "Bench press",
@@ -16,12 +16,16 @@ function(input,output,session) {
   )
   
   observe({
+    user$auth <- TRUE
+  })%>%
+    bindEvent(input$auth)
+  
+  output$list_excer <- renderUI({
+    if (user$auth) {
     purrr::map(
       .x = user$excers,
       .f = function(excer){
-        insertUI(
-          selector = "#list_excer",
-          ui = tags$div(
+        tags$div(
             style ="
              background-color:white;
              padding:5px 5px 5px 5px;
@@ -36,13 +40,15 @@ function(input,output,session) {
             tags$h2(excer$name),
             tags$p(excer$notes)
           )
-      
-        )
       }
     )
-  })
+  }
+       
+  })%>%
+    bindEvent(user$excers,user$auth)
   
   observe({
+    if (user$auth) {
     new_excer <- list(
       name = list(
         name = input$new_excer_name,
@@ -53,6 +59,7 @@ function(input,output,session) {
     names(new_excer) <- input$new_excer_name
     user$excers <- user$excers %>%
       append(new_excer)
+    }  
   }) %>%
     bindEvent(input$new_excer_save)
 }

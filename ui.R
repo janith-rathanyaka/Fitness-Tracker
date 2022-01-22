@@ -4,7 +4,11 @@ shinyUI(
     f7Tabs(
       f7Tab(
         tabName = "main",
-        active = TRUE
+        active = TRUE,
+        f7Button(
+          inputId = "auth",
+          label = "Login"
+        )
       ),
       f7Tab(
         tabName = "workouts",
@@ -13,8 +17,8 @@ shinyUI(
       f7Tab(
         tabName = "exercises",
         active = TRUE,
-        tags$div(
-          id = "list_excer"
+        uiOutput(
+          outputId = "list_excer"
         )
       ),
       f7Tab(
